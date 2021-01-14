@@ -17,7 +17,7 @@ const render = Render.create({
     wireframes: false,
     width,
     height,
-    background: "4.png",
+    background: "resources/background.png",
   },
 });
 
@@ -190,7 +190,7 @@ const goal = Bodies.rectangle(
     render: {
       fillStyle: "green",
       sprite: {
-        texture: "gold1.png",
+        texture: "./resources/treasure.png",
         xScale: unitLengthX / 900,
         yScale: unitLengthY / 600,
       },
@@ -212,7 +212,7 @@ const ball = Bodies.rectangle(
     render: {
       fillStyle: "blue",
       sprite: {
-        texture: "cave.gif",
+        texture: "./resources/player.gif",
         xScale: ballRadius / 80,
         yScale: ballRadius / 80,
       },
