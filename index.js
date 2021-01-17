@@ -37,6 +37,13 @@ Runner.run(Runner.create(), engine);
 // });
 // World.add(world, gridBackground);
 
+//music
+window.onload = function () {
+  // var audio = new Audio("music.mp3");
+  // audio.play();
+  document.getElementById("audio").play();
+};
+
 // Walls
 const walls = [
   Bodies.rectangle(width / 2, 0, width, 2, { isStatic: true }),
@@ -47,7 +54,6 @@ const walls = [
 World.add(world, walls);
 
 // Maze generation
-
 const shuffle = (arr) => {
   let counter = arr.length;
 
@@ -178,7 +184,6 @@ verticals.forEach((row, rowIndex) => {
 });
 
 // Goal
-
 const goal = Bodies.rectangle(
   width - unitLengthX / 2,
   height - unitLengthY / 2,
@@ -243,7 +248,7 @@ document.addEventListener("keydown", (event) => {
 let hasLost = false;
 
 //timer
-const startingMinutes = 0.99;
+const startingMinutes = 0.999;
 let time = startingMinutes * 60;
 
 const counterElement = document.querySelector("#counter");
@@ -260,7 +265,7 @@ function countDown() {
   } //Lose Condition
   else if (time <= 1) {
     hasLost = true;
-
+    document.getElementById("audio").pause();
     document.querySelector(".loser").classList.remove("hidden");
     world.gravity.y = 1;
     world.bodies.forEach((body) => {
@@ -288,6 +293,7 @@ Events.on(engine, "collisionStart", (event) => {
           Body.setStatic(body, false);
         }
       });
+      document.getElementById("audio").pause();
     }
   });
 });
