@@ -17,7 +17,7 @@ const render = Render.create({
     wireframes: false,
     width,
     height,
-    background: "resources/background.png",
+    background: "resources/bg3.png",
   },
 });
 
@@ -141,12 +141,12 @@ horizontals.forEach((row, rowIndex) => {
       columnIndex * unitLengthX + unitLengthX / 2,
       rowIndex * unitLengthY + unitLengthY,
       unitLengthX,
-      12,
+      4,
       {
         label: "wall",
         isStatic: true,
         render: {
-          fillStyle: "rgb(102, 51, 0)",
+          fillStyle: "white",
         },
       }
     );
@@ -163,13 +163,13 @@ verticals.forEach((row, rowIndex) => {
     const wall = Bodies.rectangle(
       columnIndex * unitLengthX + unitLengthX,
       rowIndex * unitLengthY + unitLengthY / 2,
-      12,
+      4,
       unitLengthY,
       {
         label: "wall",
         isStatic: true,
         render: {
-          fillStyle: "rgb(102, 51, 0)",
+          fillStyle: "white",
         },
       }
     );
@@ -190,9 +190,9 @@ const goal = Bodies.rectangle(
     render: {
       fillStyle: "green",
       sprite: {
-        texture: "./resources/treasure.png",
+        texture: "./resources/earth.png",
         xScale: unitLengthX / 900,
-        yScale: unitLengthY / 600,
+        yScale: unitLengthY / 700,
       },
     },
   }
@@ -212,9 +212,7 @@ const ball = Bodies.rectangle(
     render: {
       fillStyle: "blue",
       sprite: {
-        texture: "./resources/player.gif",
-        xScale: ballRadius / 80,
-        yScale: ballRadius / 80,
+        texture: "./resources/astro.gif",
       },
     },
   }
@@ -241,15 +239,47 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// Win Condition
+//hasLost
+let hasLost = false;
 
+//timer
+const startingMinutes = 0.99;
+let time = startingMinutes * 60;
+
+const counterElement = document.querySelector("#counter");
+
+setInterval(countDown, 1000);
+
+function countDown() {
+  let minutes = Math.floor(time / 60);
+  let seconds = Math.floor(time % 60);
+
+  counterElement.innerHTML = `Oxygen running out in <span style='color:#fa2c2c'>${minutes}:${seconds}</span>`;
+  if (time > 1) {
+    time--;
+  } //Lose Condition
+  else if (time <= 1) {
+    hasLost = true;
+
+    document.querySelector(".loser").classList.remove("hidden");
+    world.gravity.y = 1;
+    world.bodies.forEach((body) => {
+      if (body.label === "wall") {
+        Body.setStatic(body, false);
+      }
+    });
+  }
+}
+
+// Win Condition
 Events.on(engine, "collisionStart", (event) => {
   event.pairs.forEach((collision) => {
     const labels = ["ball", "goal"];
 
     if (
       labels.includes(collision.bodyA.label) &&
-      labels.includes(collision.bodyB.label)
+      labels.includes(collision.bodyB.label) &&
+      hasLost != true
     ) {
       document.querySelector(".winner").classList.remove("hidden");
       world.gravity.y = 1;
