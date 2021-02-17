@@ -8,4 +8,5 @@ A fun maze game built using Vanilla JavaScript &amp; Matter.js. Take the Astrona
 Live demo: https://thirsty-liskov-154dee.netlify.app/
 
 Note: The background music might not work if you're using a browser that doesn't allow Autoplay.
+
 V2 -> Changed the theme of the game from Cave to Space-based and added a timer w/ losing conditions. Will probably add different difficulty levels in future.
